@@ -32,7 +32,7 @@ function App() {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <Router />
+      <Router toggleTheme={toggleTheme} />
       <ReactQueryDevtools initialIsOpen={false} />
     </ThemeProvider>
   );

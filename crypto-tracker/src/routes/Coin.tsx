@@ -30,6 +30,7 @@ const BackBtn = styled.div`
 const PaletteBtn = styled.div`
   color: ${(props) => props.theme.accentColor};
   font-size: ${(props) => props.theme.h3Size};
+  cursor: pointer;
 `;
 
 const Title = styled.h1`
@@ -40,7 +41,7 @@ const Title = styled.h1`
 const Overview = styled.div`
   padding: 20px;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: ${(props) => props.theme.overviewColor};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,7 +70,7 @@ const Tab = styled.div<{ isActive: boolean }>`
   width: 200px;
   padding: 10px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: ${(props) => props.theme.overviewColor};
   color: ${({ isActive, theme: { accentColor, textColor } }) =>
     isActive ? accentColor : textColor};
   display: flex;
@@ -80,7 +81,7 @@ interface URLParams {
   coinId: string;
 }
 
-const Coin = () => {
+const Coin = ({ toggleTheme }: { toggleTheme: () => void }) => {
   const { coinId } = useParams() as URLParams;
   const { state } = useLocation();
 
@@ -107,7 +108,7 @@ const Coin = () => {
           </BackBtn>
         </Link>
         <Title>{state?.name ? state?.name : isLoading ? coinId : coinData?.name}</Title>
-        <PaletteBtn>
+        <PaletteBtn onClick={toggleTheme}>
           <FontAwesomeIcon icon={faPalette} />
         </PaletteBtn>
       </Header>

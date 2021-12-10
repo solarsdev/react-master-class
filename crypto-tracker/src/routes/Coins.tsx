@@ -1,4 +1,4 @@
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getCoins } from '../api';
@@ -53,16 +53,14 @@ const Title = styled.h1`
   font-size: ${(props) => props.theme.h1Size};
 `;
 
-const Coins = () => {
+const Coins = ({ toggleTheme }: { toggleTheme: () => void }) => {
   const { isLoading, data: coins } = useQuery<GetCoins[]>('getCoins', getCoins);
-  const onClick = () => {};
-  console.log(useTheme());
   return (
     <Container>
       <Header>
         <div></div>
         <Title>Crypto Tracker</Title>
-        <PaletteBtn onClick={onClick}>
+        <PaletteBtn onClick={toggleTheme}>
           <FontAwesomeIcon icon={faPalette} />
         </PaletteBtn>
       </Header>

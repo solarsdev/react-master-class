@@ -3,12 +3,14 @@ import { getCoinHistorical } from '../api';
 import ChartProps from '../interfaces/ChartProps';
 import { GetCoinHistorical } from '../interfaces/GetCoinHistorical';
 import ApexChart from 'react-apexcharts';
+import { useTheme } from 'styled-components';
 
 const Chart = ({ coinId }: ChartProps) => {
   const { isLoading, data: historicals } = useQuery<GetCoinHistorical[]>(
     ['getCoinHistorical', coinId],
     () => getCoinHistorical(coinId),
   );
+  const currentTheme = useTheme();
 
   return isLoading ? (
     <div>Loading...</div>
@@ -39,7 +41,7 @@ const Chart = ({ coinId }: ChartProps) => {
           background: 'transparent',
         },
         theme: {
-          mode: 'dark',
+          mode: currentTheme.themeName,
         },
         grid: {
           show: false,

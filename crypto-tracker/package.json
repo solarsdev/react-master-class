@@ -56,5 +56,5 @@
   "devDependencies": {
     "@types/styled-components": "^5.1.17"
   },
-  "homepage": "https://solarsdev.github.io/react-master-class/crypto-tracker"
+  "homepage": "https://solarsdev.github.io/react-master-class"
 }
