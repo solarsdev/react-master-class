@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/react-master-class/crypto-tracker/static/js/main.8870bbd6.chunk.js",
-    "main.js.map": "/react-master-class/crypto-tracker/static/js/main.8870bbd6.chunk.js.map",
-    "runtime-main.js": "/react-master-class/crypto-tracker/static/js/runtime-main.0a1ff12b.js",
-    "runtime-main.js.map": "/react-master-class/crypto-tracker/static/js/runtime-main.0a1ff12b.js.map",
-    "static/js/2.32c59e77.chunk.js": "/react-master-class/crypto-tracker/static/js/2.32c59e77.chunk.js",
-    "static/js/2.32c59e77.chunk.js.map": "/react-master-class/crypto-tracker/static/js/2.32c59e77.chunk.js.map",
-    "index.html": "/react-master-class/crypto-tracker/index.html",
-    "static/js/2.32c59e77.chunk.js.LICENSE.txt": "/react-master-class/crypto-tracker/static/js/2.32c59e77.chunk.js.LICENSE.txt"
+    "main.js": "/react-master-class/static/js/main.8870bbd6.chunk.js",
+    "main.js.map": "/react-master-class/static/js/main.8870bbd6.chunk.js.map",
+    "runtime-main.js": "/react-master-class/static/js/runtime-main.623f4896.js",
+    "runtime-main.js.map": "/react-master-class/static/js/runtime-main.623f4896.js.map",
+    "static/js/2.457a1a66.chunk.js": "/react-master-class/static/js/2.457a1a66.chunk.js",
+    "static/js/2.457a1a66.chunk.js.map": "/react-master-class/static/js/2.457a1a66.chunk.js.map",
+    "index.html": "/react-master-class/index.html",
+    "static/js/2.457a1a66.chunk.js.LICENSE.txt": "/react-master-class/static/js/2.457a1a66.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0a1ff12b.js",
-    "static/js/2.32c59e77.chunk.js",
+    "static/js/runtime-main.623f4896.js",
+    "static/js/2.457a1a66.chunk.js",
     "static/js/main.8870bbd6.chunk.js"
   ]
 }
