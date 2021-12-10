@@ -7,7 +7,7 @@
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface PriceInfo {
+export interface GetTicker {
   id: string;
   name: string;
   symbol: string;
@@ -48,11 +48,11 @@ export interface Usd {
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-  public static toPriceInfo(json: string): PriceInfo {
+  public static toPriceInfo(json: string): GetTicker {
     return cast(JSON.parse(json), r('PriceInfo'));
   }
 
-  public static priceInfoToJson(value: PriceInfo): string {
+  public static priceInfoToJson(value: GetTicker): string {
     return JSON.stringify(uncast(value, r('PriceInfo')), null, 2);
   }
 }

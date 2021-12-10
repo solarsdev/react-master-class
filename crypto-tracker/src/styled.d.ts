@@ -7,6 +7,8 @@ declare module 'styled-components' {
     textColor: string;
     bgColor: string;
     accentColor: string;
+    plusColor: string;
+    minusColor: string;
     h1Size: string;
     h2Size: string;
     h3Size: string;

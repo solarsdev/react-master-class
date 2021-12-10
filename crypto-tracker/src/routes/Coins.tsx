@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { getCoins } from '../api';
+import { GetCoins } from '../interfaces/GetCoins';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPalette } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -11,8 +15,14 @@ const Container = styled.div`
 const Header = styled.div`
   height: 15vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+`;
+
+const PaletteBtn = styled.div`
+  color: ${(props) => props.theme.accentColor};
+  font-size: ${(props) => props.theme.h3Size};
+  cursor: pointer;
 `;
 
 const CoinsList = styled.ul``;
@@ -43,37 +53,23 @@ const Title = styled.h1`
   font-size: ${(props) => props.theme.h1Size};
 `;
 
-interface CoinsInterface {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
-
 const Coins = () => {
-  const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState<CoinsInterface[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const coinsData = await (await fetch('https://api.coinpaprika.com/v1/coins')).json();
-      setCoins(coinsData.slice(0, 50));
-      setLoading(false);
-    })();
-  }, []);
-
+  const { isLoading, data: coins } = useQuery<GetCoins[]>('getCoins', getCoins);
+  const onClick = () => {};
+  console.log(useTheme());
   return (
     <Container>
       <Header>
+        <div></div>
         <Title>Crypto Tracker</Title>
+        <PaletteBtn onClick={onClick}>
+          <FontAwesomeIcon icon={faPalette} />
+        </PaletteBtn>
       </Header>
       <CoinsList>
-        {loading
+        {isLoading
           ? 'Loading...'
-          : coins.map((coin) => (
+          : coins?.map((coin) => (
               <Link key={coin.id} to={`/${coin.id}`} state={{ name: coin.name }}>
                 <Coin>
                   <img

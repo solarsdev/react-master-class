@@ -7,7 +7,7 @@
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface CoinInfo {
+export interface GetCoin {
   id: string;
   name: string;
   symbol: string;
@@ -92,11 +92,11 @@ export interface Whitepaper {
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-  public static toCoinInfo(json: string): CoinInfo {
+  public static toCoinInfo(json: string): GetCoin {
     return cast(JSON.parse(json), r('CoinInfo'));
   }
 
-  public static coinInfoToJson(value: CoinInfo): string {
+  public static coinInfoToJson(value: GetCoin): string {
     return JSON.stringify(uncast(value, r('CoinInfo')), null, 2);
   }
 }

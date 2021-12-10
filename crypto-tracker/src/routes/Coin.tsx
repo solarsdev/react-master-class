@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { Routes, Route, useLocation, useParams, Link, useMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import { isConstructSignatureDeclaration } from 'typescript';
-
-import { CoinInfo } from '../interfaces/CoinInfo';
-import { PriceInfo } from '../interfaces/PriceInfo';
+import { getCoin, getTicker } from '../api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faList, faPalette } from '@fortawesome/free-solid-svg-icons';
+import { GetCoin } from '../interfaces/GetCoin';
+import { GetTicker } from '../interfaces/GetTicker';
+import Chart from './Chart';
+import Price from './Price';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -15,8 +18,18 @@ const Container = styled.div`
 const Header = styled.div`
   height: 15vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+`;
+
+const BackBtn = styled.div`
+  color: ${(props) => props.theme.accentColor};
+  font-size: ${(props) => props.theme.h3Size};
+`;
+
+const PaletteBtn = styled.div`
+  color: ${(props) => props.theme.accentColor};
+  font-size: ${(props) => props.theme.h3Size};
 `;
 
 const Title = styled.h1`
@@ -46,68 +59,99 @@ const Description = styled.p`
   margin: 20px 10px;
 `;
 
+const Tabs = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+`;
+
+const Tab = styled.div<{ isActive: boolean }>`
+  width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: ${({ isActive, theme: { accentColor, textColor } }) =>
+    isActive ? accentColor : textColor};
+  display: flex;
+  justify-content: center;
+`;
+
 interface URLParams {
   coinId: string;
-}
-
-interface RouteState {
-  name: string;
 }
 
 const Coin = () => {
   const { coinId } = useParams() as URLParams;
   const { state } = useLocation();
 
-  const [loading, setLoading] = useState(true);
-  const [coinInfo, setCoinInfo] = useState<CoinInfo>();
-  const [priceInfo, setPriceInfo] = useState<PriceInfo>();
+  const isMatchChart = useMatch('/:coinId/chart');
+  const isMatchPrice = useMatch('/:coinId/price');
 
-  useEffect(() => {
-    (async () => {
-      const coinData = await (await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)).json();
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      setCoinInfo(coinData);
-      setPriceInfo(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  const { isLoading: isGetCoinLoading, data: coinData } = useQuery<GetCoin>(
+    ['getCoin', coinId],
+    () => getCoin(coinId),
+  );
+  const { isLoading: isGetTickerLoading, data: tickerData } = useQuery<GetTicker>(
+    ['getTicker', coinId],
+    () => getTicker(coinId),
+  );
+
+  const isLoading = isGetCoinLoading || isGetTickerLoading;
 
   return (
     <Container>
       <Header>
-        <Title>{state?.name ? state?.name : loading ? coinId : coinInfo?.name}</Title>
+        <Link to={'/'}>
+          <BackBtn>
+            <FontAwesomeIcon icon={faList} />
+          </BackBtn>
+        </Link>
+        <Title>{state?.name ? state?.name : isLoading ? coinId : coinData?.name}</Title>
+        <PaletteBtn>
+          <FontAwesomeIcon icon={faPalette} />
+        </PaletteBtn>
       </Header>
-      {loading ? (
+      {isLoading ? (
         'Loading...'
       ) : (
         <>
           <Overview>
             <OverviewItem>
               <span>RANK:</span>
-              <span>{coinInfo?.rank}</span>
+              <span>{coinData?.rank}</span>
             </OverviewItem>
             <OverviewItem>
               <span>SYMBOL:</span>
-              <span>{coinInfo?.symbol}</span>
+              <span>{coinData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
               <span>OPEN SOURCE:</span>
-              <span>{coinInfo?.open_source ? 'Yes' : 'No'}</span>
+              <span>{coinData?.open_source ? 'Yes' : 'No'}</span>
             </OverviewItem>
           </Overview>
-          <Description>{coinInfo?.description}</Description>
+          <Description>{coinData?.description}</Description>
           <Overview>
             <OverviewItem>
               <span>TOTAL SUPPLY:</span>
-              <span>{priceInfo?.total_supply}</span>
+              <span>{tickerData?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
               <span>MAX SUPPLY:</span>
-              <span>{priceInfo?.max_supply}</span>
+              <span>{tickerData?.max_supply}</span>
             </OverviewItem>
           </Overview>
+          <Tabs>
+            <Link to={`/${coinId}/chart`}>
+              <Tab isActive={isMatchChart !== null}>Chart</Tab>
+            </Link>
+            <Link to={`/${coinId}/price`}>
+              <Tab isActive={isMatchPrice !== null}>Price</Tab>
+            </Link>
+          </Tabs>
+          <Routes>
+            <Route path='chart' element={<Chart coinId={coinId} />} />
+            <Route path='price' element={<Price tickerData={tickerData} />} />
+          </Routes>
         </>
       )}
     </Container>
