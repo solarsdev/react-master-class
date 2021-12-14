@@ -3,14 +3,15 @@ import { getCoinHistorical } from '../api';
 import ChartProps from '../interfaces/ChartProps';
 import { GetCoinHistorical } from '../interfaces/GetCoinHistorical';
 import ApexChart from 'react-apexcharts';
-import { useTheme } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { themeNameAtom } from '../atoms';
 
 const Chart = ({ coinId }: ChartProps) => {
   const { isLoading, data: historicals } = useQuery<GetCoinHistorical[]>(
     ['getCoinHistorical', coinId],
     () => getCoinHistorical(coinId),
   );
-  const currentTheme = useTheme();
+  const themeName = useRecoilValue(themeNameAtom);
 
   return isLoading ? (
     <div>Loading...</div>
@@ -36,12 +37,11 @@ const Chart = ({ coinId }: ChartProps) => {
         chart: {
           width: 500,
           height: 500,
-          toolbar: { show: false },
           zoom: { enabled: false },
           background: 'transparent',
         },
         theme: {
-          mode: currentTheme.themeName,
+          mode: themeName === 'light' ? 'light' : 'dark',
         },
         grid: {
           show: false,

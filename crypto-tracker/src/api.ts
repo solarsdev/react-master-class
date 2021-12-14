@@ -16,7 +16,7 @@ export const getTicker = (coinId: string) => {
 
 export const getCoinHistorical = (coinId: string) => {
   const today = Math.floor(new Date().getTime() / 1000);
-  const start = today - 1209600; // 2 weeks ago
+  const start = today - 604800; // 1 weeks ago
   const end = today;
   return fetch(`${BASE_URL}/coins/${coinId}/ohlcv/historical?start=${start}&end=${end}`).then(
     (res) => res.json(),

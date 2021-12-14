@@ -8,6 +8,8 @@ import { GetCoin } from '../interfaces/GetCoin';
 import { GetTicker } from '../interfaces/GetTicker';
 import Chart from './Chart';
 import Price from './Price';
+import { useSetRecoilState } from 'recoil';
+import { themeNameAtom } from '../atoms';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -81,7 +83,7 @@ interface URLParams {
   coinId: string;
 }
 
-const Coin = ({ toggleTheme }: { toggleTheme: () => void }) => {
+const Coin = () => {
   const { coinId } = useParams() as URLParams;
   const { state } = useLocation();
 
@@ -98,6 +100,9 @@ const Coin = ({ toggleTheme }: { toggleTheme: () => void }) => {
   );
 
   const isLoading = isGetCoinLoading || isGetTickerLoading;
+
+  const setThemeName = useSetRecoilState(themeNameAtom);
+  const toggleTheme = () => setThemeName((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
 
   return (
     <Container>

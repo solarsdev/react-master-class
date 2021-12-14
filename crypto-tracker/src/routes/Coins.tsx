@@ -5,6 +5,8 @@ import { getCoins } from '../api';
 import { GetCoins } from '../interfaces/GetCoins';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
+import { useSetRecoilState } from 'recoil';
+import { themeNameAtom } from '../atoms';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -53,8 +55,10 @@ const Title = styled.h1`
   font-size: ${(props) => props.theme.h1Size};
 `;
 
-const Coins = ({ toggleTheme }: { toggleTheme: () => void }) => {
+const Coins = () => {
   const { isLoading, data: coins } = useQuery<GetCoins[]>('getCoins', getCoins);
+  const setThemeName = useSetRecoilState(themeNameAtom);
+  const toggleTheme = () => setThemeName((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   return (
     <Container>
       <Header>
