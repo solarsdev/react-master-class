@@ -9,8 +9,9 @@ const BaseToDo = ({ text, category, id }: ToDo) => {
     const newToDo: ToDo = { text, id, category: newCategory };
     // replace with new ToDo
     setToDos((prevToDos) => {
-      prevToDos[targetPosition] = newToDo;
-      return prevToDos;
+      const newToDos = [...prevToDos];
+      newToDos[targetPosition] = newToDo;
+      return newToDos;
     });
   };
   return (

@@ -1519,3 +1519,56 @@ npm install -D @types/styled-components
 
   export default ToDoList;
   ```
+
+### JavaScript의 불변성에 대해서 (React관점으로)
+
+- React에서는 useState() 훅을 이용해서 페이지의 상태를 관리하게 됨
+- State변수는 기본적으로는 값을 담는 value와 값을 조정하는 modifier 함수를 별도로 지니게 됨
+- 값의 경우에는 readonly 타입으로 값을 조정하는 setter를 통해서만 변수의 값이 변하며 이를 직접적으로 수정하고자 한다면 새로운 그릇에 변수를 담아서 변경된 그릇을 리턴해야 함
+- ToDo 어플리케이션에서 활용한 소스코드
+  ```tsx
+  import { useRecoilState } from 'recoil';
+  import { toDoState } from '../atoms';
+  import ToDo from '../interfaces/ToDo';
+
+  const BaseToDo = ({ text, category, id }: ToDo) => {
+    const [toDos, setToDos] = useRecoilState(toDoState);
+    const onClick = (newCategory: ToDo['category']) => {
+      const targetPosition = toDos.findIndex((toDo) => toDo.id === id);
+      const newToDo: ToDo = { text, id, category: newCategory };
+      // replace with new ToDo
+      setToDos((prevToDos) => {
+        const newToDos = [...prevToDos];
+        newToDos[targetPosition] = newToDo;
+        return newToDos;
+      });
+    };
+    return (
+      <li>
+        <span>{text}</span>
+        {category !== 'DOING' && <button onClick={() => onClick('DOING')}>Doing</button>}
+        {category !== 'TO_DO' && <button onClick={() => onClick('TO_DO')}>To Do</button>}
+        {category !== 'DONE' && <button onClick={() => onClick('DONE')}>Done</button>}
+      </li>
+    );
+  };
+
+  export default BaseToDo;
+  ```
+  ```tsx
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  // 이 부분이 state를 선언하는 부분
+  // toDos라는 배열과, setToDos라는 setter함수를 이용해서 state를 선언한 뒤
+  ```
+  ```tsx
+  setToDos((prevToDos) => {
+    const newToDos = [...prevToDos];
+    newToDos[targetPosition] = newToDo;
+    return newToDos;
+  });
+  // setToDos를 이용해서 변경할때는 prev값을 받아오고 직접 수정할수가 없음
+  // 왜냐하면, prevToDo의 경우에는 readonly로 지정되어 있으며,
+  // 이를 직접 수정하는 것이 금지되어 있기 때문이다.
+  // 따라서, 새로운 newToDos 배열을 기존 값을 복사하는 방식으로 만들어 낸 뒤,
+  // 내용을 수정한 newToDos를 반환한다.
+  ```
