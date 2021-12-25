@@ -4,6 +4,7 @@ import ToDo from '../interfaces/ToDo';
 
 const BaseToDo = ({ text, category, id }: ToDo) => {
   const [toDos, setToDos] = useRecoilState(toDoState);
+
   const onClick = (newCategory: ToDo['category']) => {
     const targetPosition = toDos.findIndex((toDo) => toDo.id === id);
     const newToDo: ToDo = { text, id, category: newCategory };
