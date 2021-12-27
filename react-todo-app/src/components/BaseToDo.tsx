@@ -1,5 +1,20 @@
 import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
 import { Categories, ToDo, toDoState } from '../atoms';
+
+const ToDoContainer = styled.div`
+  padding: 10px;
+  color: white;
+  background-color: rgb(50, 50, 50);
+  border-radius: 5px;
+  display: flex;
+`;
+
+const ToDoStatus = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const BaseToDo = ({ text, category, id }: ToDo) => {
   const [toDos, setToDos] = useRecoilState(toDoState);
@@ -15,7 +30,8 @@ const BaseToDo = ({ text, category, id }: ToDo) => {
     });
   };
   return (
-    <li>
+    <ToDoContainer>
+      <ToDoStatus>test</ToDoStatus>
       <span>{text}</span>
       {category !== Categories.DOING && (
         <button onClick={() => onClick(Categories.DOING)}>Doing</button>
@@ -26,7 +42,7 @@ const BaseToDo = ({ text, category, id }: ToDo) => {
       {category !== Categories.DONE && (
         <button onClick={() => onClick(Categories.DONE)}>Done</button>
       )}
-    </li>
+    </ToDoContainer>
   );
 };
 
