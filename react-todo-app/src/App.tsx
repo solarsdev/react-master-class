@@ -4,6 +4,9 @@ import ToDoList from './components/ToDoList';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 const App = () => {

@@ -13,7 +13,11 @@ const Background = styled.div`
 `;
 
 const Container = styled.div`
+  height: 100%;
   padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 40px 40px 1fr 40px;
 `;
 
 const Title = styled.h1`
@@ -25,8 +29,8 @@ const Title = styled.h1`
 const ToDos = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
-  grid-gap: 2px;
+  grid-auto-rows: 45px;
+  grid-gap: 1px;
 `;
 
 const ToDoList = () => {
@@ -46,12 +50,12 @@ const ToDoList = () => {
             <option value={Categories.DONE}>Done</option>
           </select>
         </form>
-        <CreateToDo />
         <ToDos>
           {toDos.map((toDo) => (
             <BaseToDo key={toDo.id} {...toDo} />
           ))}
         </ToDos>
+        <CreateToDo />
       </Container>
     </Background>
   );

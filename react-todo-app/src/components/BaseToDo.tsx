@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { Categories, ToDo, toDoState } from '../atoms';
@@ -31,17 +33,10 @@ const BaseToDo = ({ text, category, id }: ToDo) => {
   };
   return (
     <ToDoContainer>
-      <ToDoStatus>test</ToDoStatus>
+      <ToDoStatus>
+        <FontAwesomeIcon icon={faCircle} />
+      </ToDoStatus>
       <span>{text}</span>
-      {category !== Categories.DOING && (
-        <button onClick={() => onClick(Categories.DOING)}>Doing</button>
-      )}
-      {category !== Categories.TO_DO && (
-        <button onClick={() => onClick(Categories.TO_DO)}>To Do</button>
-      )}
-      {category !== Categories.DONE && (
-        <button onClick={() => onClick(Categories.DONE)}>Done</button>
-      )}
     </ToDoContainer>
   );
 };
