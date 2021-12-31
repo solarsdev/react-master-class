@@ -10,6 +10,7 @@ const Container = styled.div`
   place-items: center;
   grid-template-columns: 40px 1fr;
   background-color: rgb(30, 30, 30);
+  border-radius: 5px;
   color: white;
 `;
 
@@ -19,7 +20,6 @@ const InsertToDo = styled.input`
   border: none;
   outline: none;
   height: 45px;
-  border-radius: 5px;
   width: 100%;
   &::placeholder {
     color: white;

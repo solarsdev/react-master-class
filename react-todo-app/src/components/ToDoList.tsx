@@ -17,7 +17,7 @@ const Container = styled.div`
   padding: 20px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 40px 40px 1fr 40px;
+  grid-template-rows: 45px 45px 1fr 45px;
 `;
 
 const Title = styled.h1`
@@ -28,9 +28,11 @@ const Title = styled.h1`
 
 const ToDos = styled.div`
   display: grid;
+  align-items: center;
   grid-template-columns: 1fr;
-  grid-auto-rows: 45px;
+  grid-auto-rows: 40px;
   grid-gap: 1px;
+  font-size: 14px;
 `;
 
 const ToDoList = () => {

@@ -10,12 +10,20 @@ const ToDoContainer = styled.div`
   background-color: rgb(50, 50, 50);
   border-radius: 5px;
   display: flex;
+  align-items: center;
+  height: 40px;
 `;
 
 const ToDoStatus = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: rgb(150, 150, 150);
+  font-size: 15px;
+`;
+
+const ToDoText = styled.span`
+  padding: 10px;
 `;
 
 const BaseToDo = ({ text, category, id }: ToDo) => {
@@ -36,7 +44,7 @@ const BaseToDo = ({ text, category, id }: ToDo) => {
       <ToDoStatus>
         <FontAwesomeIcon icon={faCircle} />
       </ToDoStatus>
-      <span>{text}</span>
+      <ToDoText>{text}</ToDoText>
     </ToDoContainer>
   );
 };
